@@ -1,0 +1,56 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registrar usuario</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label position="floating">Nombres</ion-label>
+    <ion-input [(ngModel)]="user.profile.firstName"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Apellidos</ion-label>
+    <ion-input [(ngModel)]="user.profile.lastName"></ion-input>
+  </ion-item>
+
+
+  <ion-item>
+    <ion-label position="floating">Email</ion-label>
+    <ion-input type="email" [(ngModel)]="user.email"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="floating">Contraseña</ion-label>
+    <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Rol</ion-label>
+    <ion-select placeholder="Selecciona un rol" [(ngModel)]="selectedRole">
+      <ion-select-option value="ADMIN">Administrador del sistema</ion-select-option>
+      <ion-select-option value="PRODUCT">Administrador de producto</ion-select-option>
+      <ion-select-option value="MANAGER">Gerente</ion-select-option>
+      <ion-select-option value="ADVISOR">Asesor</ion-select-option>
+      <ion-select-option value="ACCOUNTANT">Contador</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <!-- Campo Departamento visible solo si el rol es ADVISOR -->
+  <ion-item *ngIf="selectedRole === 'ADVISOR'">
+    <ion-label position="floating">Departamento</ion-label>
+    <ion-select [(ngModel)]="selectedDepartmentId">
+      <ion-select-option *ngFor="let dept of departments" [value]="dept.departmentId">
+        <ion-icon [name]="dept.ionicIcon"></ion-icon>
+        {{ dept.name }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-button expand="block" (click)="register()">Guardar</ion-button>
+</ion-content>

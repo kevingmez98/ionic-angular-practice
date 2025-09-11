@@ -6,9 +6,9 @@ const routes: Routes = [
   // Rutas públicas (sin menú)
   {
     path: 'home', // Ruta a la qué se llegará
-    loadChildren: () =>// Cargar solo cuando se acceda a la ruta (lazy loading)
-      import('./home/home.module')
-        .then(m => m.HomePageModule)
+    loadComponent: () =>// Cargar solo cuando se acceda a la ruta (lazy loading)
+      import('./home/home.page')
+        .then(m => m.HomePage)
   },
   {
     path: '',

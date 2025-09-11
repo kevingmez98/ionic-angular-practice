@@ -9,7 +9,7 @@ const routes: Routes = [
         children: [
       {
         path: 'users',
-        loadChildren: () => import('../../../users/users.module').then(m => m.UsersPageModule)
+        loadComponent: () => import('../../../users/users.page').then(m => m.UsersPage)
       }
     ]
   }

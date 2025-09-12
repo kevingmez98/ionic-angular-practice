@@ -3,64 +3,65 @@
   <ion-text color="dark">
     <p class="ion-no-margin">Aquí puedes ver y gestionar los usuarios de la agencia.</p>
   </ion-text>
-  <ion-card>
-    <ion-card-header>
-      <div class="header-row">
-        <ion-card-title>Usuarios de la agencia</ion-card-title>
-        <ion-button fill="solid" color="primary" (click)="openUserModal()">
-          <ion-icon slot="start" name="person-add-outline" ></ion-icon>
-          Agregar usuario
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <ion-card-title>Usuarios de la agencia</ion-card-title>
+    <ion-button fill="solid" color="primary" (click)="openUserModal()">
+      <ion-icon slot="start" name="person-add-outline"></ion-icon>
+      Agregar usuario
+    </ion-button>
+  </div>
+
+  <div>
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size="7">
+        </ion-col>
+        <ion-col size="2">
+
+        </ion-col>
+        <ion-col size="2">
+          <ion-item>Total de resultados: {{count}}</ion-item>
+        </ion-col>
+      </ion-row>
+
+      <!-- Tabla -->
+
+      <ion-row class="header-row">
+        <ion-col><strong>Usuario</strong></ion-col>
+        <ion-col  class="ion-hide-sm-down"><strong>Contacto</strong></ion-col>
+        <ion-col><strong>Rol</strong></ion-col>
+        <ion-col class="ion-hide-sm-down"><strong>Estado</strong></ion-col>
+        <ion-col class="ion-hide-sm-down"><strong>Fecha de registro</strong></ion-col>
+        <ion-col><strong>Acciones</strong></ion-col>
+      </ion-row>
+      <ion-row *ngFor="let user of profiles" class="data-row">
+        <ion-col>{{ user.fullName }}</ion-col>
+        <ion-col  class="ion-hide-sm-down">{{ user.user?.email || 'Sin correo' }}</ion-col>
+        <ion-col>{{ user.role }}</ion-col>
+        <ion-col class="ion-hide-sm-down">{{ user.status ? 'Activo' : 'Inactivo' }}</ion-col>
+        <ion-col class="ion-hide-sm-down">{{ user.createdAt | date: 'shortDate' }}</ion-col>
+        <ion-col>
+          <ion-button>
+            <ion-icon slot="icon-only" name="pencil-sharp"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only"  name="eye-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <ion-button (click)="prevPage()" [disabled]="page === 1">
+          <ion-icon name="chevron-back-outline"></ion-icon>
         </ion-button>
-      </div>
-    </ion-card-header>
-
-    <ion-card-content>
-      <ion-grid>
-        <ion-row class="ion-align-items-center">
-          <ion-col size="7">
-            <ion-searchbar placeholder="Buscar usuario por nombre o email" showCancelButton="focus" debounce="300">
-            </ion-searchbar>
-          </ion-col>
-          <ion-col size="2">
-            <ion-select interface="popover" placeholder="Filtrar por ciudad">
-              <ion-select-option value="">Todas</ion-select-option>
-              <ion-select-option value="admin">Bogotá</ion-select-option>
-              <ion-select-option value="editor">Cali</ion-select-option>
-            </ion-select>
-          </ion-col>
-          <ion-col size="2">
-            <ion-item>2 de 7 resultados</ion-item>
-          </ion-col>
-        </ion-row>
-
-        <!-- Tabla -->
-
-        <ion-row>
-          <ion-col><strong>Usuario</strong></ion-col>
-          <ion-col><strong>Contacto</strong></ion-col>
-          <ion-col><strong>Rol</strong></ion-col>
-          <ion-col><strong>Estado</strong></ion-col>
-          <ion-col><strong>Fecha de registro</strong></ion-col>
-          <ion-col><strong>Acciones</strong></ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col> user.name </ion-col>
-          <ion-col> user.email </ion-col>
-          <ion-col> user.rol </ion-col>
-          <ion-col> user.state </ion-col>
-          <ion-col> user.date </ion-col>
-          <ion-col> user.actions </ion-col>
-        </ion-row>
-                <ion-row>
-          <ion-col> user.name </ion-col>
-          <ion-col> user.email </ion-col>
-          <ion-col> user.rol </ion-col>
-          <ion-col> user.state </ion-col>
-          <ion-col> user.date </ion-col>
-          <ion-col> user.actions </ion-col>
-        </ion-row>
-      </ion-grid>
-
-    </ion-card-content>
-  </ion-card>
+        Página {{ page }}
+        <ion-button (click)="nextPage()" [disabled]="isLastPage">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

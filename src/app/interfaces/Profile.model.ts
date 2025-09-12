@@ -1,3 +1,6 @@
+
+import { User } from "./User.model";
+
 // Interfaz base
 export interface Profile {
     profileId: string;
@@ -7,6 +10,7 @@ export interface Profile {
     role: string;
     status: boolean;
     createdAt: Date;
+    user?: User;
 }
 
 // Tipo para insertar un nuevo perfil

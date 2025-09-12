@@ -6,10 +6,10 @@ const routes: Routes = [
   {
     path: '',
     component: MenuLayoutPage,
-        children: [
+    children: [
       {
-        path: 'users',
-        loadComponent: () => import('../../../users/users.page').then(m => m.UsersPage)
+        path: '',
+        loadChildren: () => import('../../../tabs/tabs/tabs.module').then(m => m.TabsPageModule)
       }
     ]
   }
@@ -19,4 +19,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class MenuLayoutPageRoutingModule {}
+export class MenuLayoutPageRoutingModule { }

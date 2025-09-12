@@ -1,0 +1,39 @@
+<app-header title="Resumen de reservas"></app-header>
+<ion-content [fullscreen]="true">
+  <div style="overflow-x: auto;">
+    <ion-grid style="min-width: 600px;">
+      <ion-row class="ion-align-items-center">
+        <ion-col size="3">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Reservas Próximas</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              Tienes 5 reservas próximas.
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size="6">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Reservas en Curso</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              Actualmente hay 2 reservas en curso.
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size="3">
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Total de Reservas Asignadas</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              Total asignado: 27 reservas.
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

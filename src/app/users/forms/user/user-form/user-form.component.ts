@@ -65,9 +65,7 @@ export class UserFormComponent implements OnInit {
       // Iniciar sesión inmediatamente después del registro
       const { data: signInData, error: signInError } = await this.authService.signIn(this.user.email, this.user.password);
 
-
       const userId = signInData.user?.id;
-      console.log(signInData);
       if (!userId) {
         console.error('No se obtuvo userId después de registro');
         return;

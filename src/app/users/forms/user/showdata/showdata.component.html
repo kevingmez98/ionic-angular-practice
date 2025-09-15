@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Información de usuario</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-segment>
+    <ion-segment-button value="basic" content-id="basic-content">
+      <ion-label>Datos básicos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="advisor" content-id="advisor-content" *ngIf="profile.role === UserRole.ADVISOR">
+      <ion-label>Datos del asesor</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <ion-segment-view>
+    <ion-segment-content id="basic-content">
+      <ion-item>
+        <ion-label>Nombre completo</ion-label>
+        <ion-label>{{profile.fullName}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Email</ion-label>
+        <ion-label>{{profile.email}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Telefono</ion-label>
+        <ion-label>{{profile.phone}}</ion-label>
+      </ion-item>
+    </ion-segment-content>
+    <ion-segment-content id="advisor-content" *ngIf="profile.role === UserRole.ADVISOR">
+      <ion-item>
+        <ion-label>Departamento</ion-label>
+        <ion-label>{{department?.name}}</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Especialidad</ion-label>
+        <ion-label>{{advisor?.specialty}}</ion-label>
+      </ion-item>
+    </ion-segment-content>
+  </ion-segment-view>
+</ion-content>

@@ -1,17 +1,21 @@
 
-import { User } from "./User.model";
-
 // Interfaz base
 export interface Profile {
-    profileId: string;
-    userId: string;
-    fullName: string;
-    displayName: string;
+    id: string;
+    authUserId: string;
+    fullName: string;    
     role: string;
-    status: boolean;
+    isActive: boolean;
     createdAt: Date;
-    user?: User;
+    updatedAt: Date;
+    phone: string;
+    email: string;
 }
 
-// Tipo para insertar un nuevo perfil
-export type NewProfile = Omit<Profile, 'profileId'>;
+// Tipo para insertar un nuevo perfil sin ID de authUser
+export type NewProfile = Omit<Profile, 'id' | 'authUserId' | 'createdAt' | 'updatedAt'>;
+
+// Tipo para insertar un perfil con ID de authUser
+export type InsertableProfile = Omit<Profile, 'id' | 'createdAt' | 'updatedAt'>;
+
+

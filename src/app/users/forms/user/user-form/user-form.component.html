@@ -11,23 +11,16 @@
 
 <ion-content class="ion-padding">
   <ion-item>
-    <ion-label position="floating">Nombres</ion-label>
-    <ion-input [(ngModel)]="user.profile.firstName"></ion-input>
+    <ion-label position="floating">Nombre completo</ion-label>
+    <ion-input [(ngModel)]="user.fullName"></ion-input>
   </ion-item>
-  <ion-item>
-    <ion-label position="floating">Apellidos</ion-label>
-    <ion-input [(ngModel)]="user.profile.lastName"></ion-input>
-  </ion-item>
-
-
   <ion-item>
     <ion-label position="floating">Email</ion-label>
     <ion-input type="email" [(ngModel)]="user.email"></ion-input>
   </ion-item>
-
   <ion-item>
-    <ion-label position="floating">Contraseña</ion-label>
-    <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+    <ion-label position="floating">Telefono</ion-label>
+    <ion-textarea [(ngModel)]="user.phone"></ion-textarea>
   </ion-item>
 
   <ion-item>
@@ -41,15 +34,20 @@
     </ion-select>
   </ion-item>
 
-  <!-- Campo Departamento visible solo si el rol es ADVISOR -->
+  <!-- Campos Departamento y especialidad visibles solo si el rol es ADVISOR -->
   <ion-item *ngIf="selectedRole === 'ADVISOR'">
-    <ion-label position="floating">Departamento</ion-label>
+    <ion-label>Departamento</ion-label>
     <ion-select [(ngModel)]="selectedDepartmentId">
       <ion-select-option *ngFor="let dept of departments" [value]="dept.departmentId">
         <ion-icon [name]="dept.ionicIcon"></ion-icon>
         {{ dept.name }}
       </ion-select-option>
     </ion-select>
+  </ion-item>
+
+  <ion-item *ngIf="selectedRole === 'ADVISOR'">
+    <ion-label position="floating">Especialidad</ion-label>
+    <ion-input [(ngModel)]="advisor.specialty"></ion-input>
   </ion-item>
 
   <ion-button expand="block" (click)="register()">Guardar</ion-button>

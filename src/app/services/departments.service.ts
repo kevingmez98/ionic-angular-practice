@@ -12,16 +12,28 @@ export class DepartmentService {
     constructor(private supabaseService: SupabaseService) { }
 
     // Metodo de recuperación de departamentos
-    async getDepartments(): Promise<Department[]> {
-        const { data, error } = await this.supabaseService.getSupabase()
-            .from('departments').select('id, name, ionic_icon')
-            .range(0, 9); // Equivalente a LIMIT 10 OFFSET 0;;
+    async getDepartments(page: number = 0, pageSize: number = 10, filters?: { [key: string]: any }): Promise<Department[]> {
+        let query = this.supabaseService.getSupabase()
+            .from('departments')
+            .select('id, name, ionic_icon');
+
+        // Aplicar filtros si existen
+        if (filters) {
+            for (const key in filters) {
+                query = query.eq(key, filters[key]);
+            }
+        }
+        // Calcular rangos
+        const from = page * pageSize;
+        const to = from + pageSize - 1;
+        query = query.range(from, to);
+
+        const { data, error } = await query;
 
         if (error) {
             throw error;
         }
 
-        // Convertir el array crudo a un array con la forma Department[]
         return (data ?? []).map(this.mapDepartment);
     }
 

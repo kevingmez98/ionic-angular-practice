@@ -3,9 +3,11 @@ import { IonicModule, ModalController } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from 'src/app/services/users.service';
-import { AuthService } from 'src/app/services/authservice.service';
 import { DepartmentService } from 'src/app/services/departments.service';
+import {AdvisorService} from 'src/app/services/advisor.service';
 import { Department } from 'src/app/interfaces/department.model';
+import { NewProfile } from 'src/app/interfaces/Profile.model';
+import { NewAdvisor } from 'src/app/interfaces/Advisor.model';
 
 @Component({
   selector: 'app-user-form',
@@ -20,26 +22,28 @@ import { Department } from 'src/app/interfaces/department.model';
 })
 export class UserFormComponent implements OnInit {
 
-  constructor(private modalCtrl: ModalController, private userService: UserService,
-    private authService: AuthService, private departmentService: DepartmentService) { }
+  constructor(private modalCtrl: ModalController, private userService: UserService, 
+    private departmentService: DepartmentService, private advisorService: AdvisorService) { }
 
   departments: Department[] = [];
-
   selectedRole: string = '';
   selectedDepartmentId: string = '';
   errorMessage: string = '';
 
-  user = {
-    profile: {
-      firstName: '',
-      lastName: '',
-      role: '',
-      status: true,
-      idDepartment: ''  // Solo se usará si rol === 'ADVISOR'
-    },
-    email: '',
-    password: '',
+  password: string = '';
 
+  user: NewProfile = {
+    fullName: '',
+    role: '',
+    isActive: true,
+    phone: "",
+    email: "",
+  };
+
+  advisor: NewAdvisor = {
+    departmentId: '',
+    specialty: '',
+    profileId: ''
   };
 
 
@@ -55,45 +59,29 @@ export class UserFormComponent implements OnInit {
   async register() {
     try {
       // 1. Registro en Auth de supabase
-      const { data, error } = await this.authService.signUp(this.user.email, this.user.password);
+      /*const { data, error } = await this.authService.signUp(this.user.email, this.password);
       if (error) {
         console.error('Error en registro auth:', error.message);
         this.errorMessage = error.message;
         return;
       }
-
-      // Iniciar sesión inmediatamente después del registro
-      const { data: signInData, error: signInError } = await this.authService.signIn(this.user.email, this.user.password);
-
-      const userId = signInData.user?.id;
-      if (!userId) {
-        console.error('No se obtuvo userId después de registro');
-        return;
-      }
-
-
-      // 2. Guardar datos en tabla users
-      const profile = await this.userService.saveUserData(userId, {
-        first_name: this.user.profile.firstName,
-        last_name: this.user.profile.lastName,
-        status: this.user.profile.status,
-        display_name: `${this.user.profile.firstName} ${this.user.profile.lastName}`,
-        role: this.selectedRole,
-        user_id: userId
-      });
-
-      console.log('Perfil guardado:', profile);
+*/
+      // const userId = data.user?.id;
+      const userId = "";
+      // 2. Guardar datos en tabla profiles
+      this.user.role = this.selectedRole;
+      const profile = await this.userService.saveUserData(userId, this.user);
 
       // 3. Si rol es ADVISOR, guardar en advisors
-      /* if (this.selectedRole === 'ADVISOR') {
-         const { error: advisorError } = await supabase.from('advisors').insert([{
-           profile_id: profileData.id,
-           departamento: this.user.departamento
-         }]);
-       }*/
+      if (this.selectedRole === 'ADVISOR') {
 
-      // Registro completado
-      console.log('Usuario registrado con éxito!');
+        this.advisor.departmentId = this.selectedDepartmentId;
+        this.advisor.profileId = profile[0].id;
+        const advisor = await this.advisorService.saveAdvisorData(this.advisor);
+      }
+
+      // Cerrar el modal y devolver un flag para indicar que se debe recargar
+      this.modalCtrl.dismiss({ refresh: true });
 
     } catch (e: any) {
       console.error('Error guardando datos usuario:', e.message);

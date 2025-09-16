@@ -16,6 +16,10 @@ const routes: Routes = [
         loadComponent: () => import('../../users/users.page').then(m => m.UsersPage)
       },
       {
+        path: 'providers',
+        loadComponent: () => import('../../providers/providers.page').then(m => m.ProvidersPage)
+      },
+      {
         path: '',
         redirectTo: 'summary',
         pathMatch: 'full'

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Registrar usuario</ion-title>
+    <ion-title>{{ isEditMode ? 'Editar Usuario' : 'Crear Usuario' }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="cancel()">
         <ion-icon name="close"></ion-icon>
@@ -49,6 +49,10 @@
     <ion-label position="floating">Especialidad</ion-label>
     <ion-input [(ngModel)]="advisor.specialty"></ion-input>
   </ion-item>
+  <ion-item>
+    <ion-label>Usuario activo</ion-label>
+    <ion-toggle [(ngModel)]="user.isActive"></ion-toggle>
+  </ion-item>
 
-  <ion-button expand="block" (click)="register()">Guardar</ion-button>
+  <ion-button expand="block" (click)="save()">Guardar</ion-button>
 </ion-content>

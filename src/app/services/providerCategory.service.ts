@@ -1,21 +1,22 @@
 import { Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { Department } from '../interfaces/Department.model';
+import { ProviderCategory } from '../interfaces/ProviderCategory.model';
 
 @Injectable({
     providedIn: 'root' // Singleton
 })
 
-// Servicio de autenticación
-export class DepartmentService {
+// Servicio de categorias o tipo de proveedor
+export class ProviderCategoryService {
 
     constructor(private supabaseService: SupabaseService) { }
 
-    // Metodo de recuperación de departamentos
-    async getDepartments(page: number = 0, pageSize: number = 10, filters?: { [key: string]: any }): Promise<Department[]> {
+    // Metodo de recuperación de categorías
+    async getCategories(page: number = 0, pageSize: number = 10, filters?: { [key: string]: any }): Promise<ProviderCategory[]> {
         let query = this.supabaseService.getSupabase()
-            .from('departments')
-            .select('id, name, ionic_icon');
+            .from('provider_categories')
+            .select('id, code, name, created_at');
 
         // Aplicar filtros si existen
         if (filters) {
@@ -34,15 +35,16 @@ export class DepartmentService {
             throw error;
         }
 
-        return (data ?? []).map(this.mapDepartment);
+        return (data ?? []).map(this.mapCategory);
     }
 
-    // Mapeo a departamento
-    mapDepartment(raw: any): Department {
+    // Mapeo a categoria
+    mapCategory(raw: any): ProviderCategory {
         return {
-            departmentId: raw.id,
+            categoryId: raw.id,
+            code: raw.code,
             name: raw.name,
-            ionicIcon: raw.ionic_icon,
+            createdAt: raw.created_at
         };
     }
 }

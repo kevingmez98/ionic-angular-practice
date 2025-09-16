@@ -1,0 +1,59 @@
+<app-header title="usuarios"></app-header>
+<ion-content class="ion-padding ion-safe-area-top" fullscreen="false" padding>
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <ion-card-title>Proveedores de la agencia</ion-card-title>
+    <ion-card-subtitle color="dark" class="ion-hide-sm-down">
+      <p class="ion-no-margin">Aquí puedes ver y gestionar los proveedores de la agencia.</p>
+    </ion-card-subtitle>
+  </div>
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-hide-sm-down">
+      <ion-col sizeMd="2">
+        <ion-button fill="solid" color="primary">
+          <ion-icon slot="start" name="person-add-outline"></ion-icon>
+          Agregar proveedor
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div>
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col sizeMd="7" sizeSm="2">
+        </ion-col>
+        <ion-col size="2" />
+        <ion-col sizeMd="2" sizeSm="7">
+          <ion-item>Total: {{count}}</ion-item>
+        </ion-col>
+      </ion-row>
+
+      <!-- Tabla -->
+
+      <ion-row class="header-row">
+        <ion-col class="ion-hide-sm-down"><strong>Logo</strong></ion-col>
+        <ion-col><strong>Nombre</strong></ion-col>
+        <ion-col><strong>Tipo proveedor</strong></ion-col>
+        <ion-col class="ion-hide-sm-down"><strong>Estado</strong></ion-col>
+        <ion-col class="ion-hide-sm-down"><strong>Fecha de registro</strong></ion-col>
+        <ion-col><strong>Acciones</strong></ion-col>
+      </ion-row>
+
+      <!-- Tabla -->
+      <ion-row *ngFor="let provider of providers" class="data-row">
+        <ion-col class="ion-hide-sm-down">{{ provider.logoUrl }}</ion-col>
+        <ion-col>{{ provider.bussinesName }}</ion-col>
+        <ion-col>{{ provider.providerType }}</ion-col>
+        <ion-col class="ion-hide-sm-down"><strong>{{ provider.isActive ? 'Activo' : 'Inactivo' }}</strong></ion-col>
+        <ion-col class="ion-hide-sm-down"><strong>{{ provider.createdAt | date: 'shortDate' }}</strong></ion-col>
+        <ion-col>
+          <ion-button (click)="openProviderModal(true,provider)">
+            <ion-icon slot="icon-only" name="pencil-sharp"></ion-icon>
+          </ion-button>
+          <ion-button (click)="openInfoModal(provider)">
+            <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

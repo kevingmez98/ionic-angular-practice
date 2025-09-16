@@ -65,6 +65,19 @@ export class AdvisorService {
     }
 
 
+    // Metodo de actualización a advisors
+    async updateAdvisorData(advisorId: string, advisorData: any) {
+        const advisorDB = this.mapToDbAdvisor(advisorData);
+        const { data, error } = await this.supabaseService.getSupabase()
+            .from('advisors')
+            .update([advisorDB]).eq('id', advisorId);
+        if (error) {
+            throw error;
+        }
+        return (data ?? []).map(this.mapAdvisor);
+    }
+
+
     /* Mapeo de advisors */
     // Mapeo a advisor
     mapAdvisor(raw: any): Advisor {

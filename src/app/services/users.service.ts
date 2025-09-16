@@ -36,7 +36,7 @@ export class UserService {
         }
 
         // Enviar petición
-        const { data, error, count } = await query.range(from, to);
+        const { data, error, count } = await query.range(from, to).order("created_at");
         if (error) {
             throw error;
         }
@@ -48,7 +48,8 @@ export class UserService {
 
     // Metodo de registro a profiles
     async saveUserData(userId: string, userData: NewProfile): Promise<Profile[]> {
-        const userDB = this.mapToDbProfile(userData, userId);
+        const userDB = this.mapToDbProfile(userData);
+        userDB.auth_user_id = "";
         const { data, error } = await this.supabaseService.getSupabase()
             .from('profiles')
             .insert([userDB]).select();
@@ -56,10 +57,21 @@ export class UserService {
         if (error) {
             throw error;
         }
-
-        console.log(data);
         return (data ?? []).map(this.mapProfile);
     }
+
+    //Metodo de actualización profiles
+    async updateUserData(profileId: string, userData: NewProfile): Promise<Profile[]> {
+        const userDB = this.mapToDbProfile(userData);
+        const { data, error } = await this.supabaseService.getSupabase()
+            .from('profiles')
+            .update([userDB]).eq('id',profileId);
+        if (error) {
+            throw error;
+        }
+        return (data ?? []).map(this.mapProfile);
+    }
+
 
     /* Mapeo de profiles */
 
@@ -80,14 +92,14 @@ export class UserService {
     }
 
     // Mapeo de profiles a campos de la BD
-    mapToDbProfile(user: NewProfile, authUserId: string) {
+    mapToDbProfile(user: NewProfile) {
         return {
             full_name: user.fullName,
             role: user.role,
             is_active: user.isActive,
             phone: user.phone,
             email: user.email,
-            auth_user_id: null,
+            auth_user_id: "",
         };
     }
 

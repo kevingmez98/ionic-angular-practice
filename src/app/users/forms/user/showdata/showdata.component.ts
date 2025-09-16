@@ -4,8 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from 'src/app/services/users.service';
 import { DepartmentService } from 'src/app/services/departments.service';
-import { Department } from 'src/app/interfaces/department.model';
-import { User } from 'src/app/interfaces/User.model';
+import { Department } from 'src/app/interfaces/Department.model';
 import { Advisor } from 'src/app/interfaces/Advisor.model';
 import { UserRole } from 'src/app/constants/roles';
 import { Profile } from 'src/app/interfaces/Profile.model';
@@ -23,10 +22,10 @@ import { AdvisorService } from 'src/app/services/advisor.service';
 })
 export class ShowdataComponent implements OnInit {
   @Input() profile!: Profile;
-  public readonly UserRole = UserRole; // exponer el enum al template
+  public readonly UserRole = UserRole; // exponer el enum de roles al template
   advisor?: Advisor;
   department?: Department;
-  constructor(private modalCtrl: ModalController, private userService: UserService,
+  constructor(private modalCtrl: ModalController,
     private departmentService: DepartmentService, private advisorService: AdvisorService) { }
 
 

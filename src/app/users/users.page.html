@@ -9,7 +9,7 @@
   <ion-grid>
     <ion-row class="ion-align-items-center ion-hide-sm-down">
       <ion-col sizeMd="2">
-        <ion-button fill="solid" color="primary" (click)="openUserModal()">
+        <ion-button fill="solid" color="primary" (click)="openUserModal(false)">
           <ion-icon slot="start" name="person-add-outline"></ion-icon>
           Agregar usuario
         </ion-button>
@@ -44,10 +44,10 @@
         <ion-col class="ion-hide-sm-down">{{ user.isActive ? 'Activo' : 'Inactivo' }}</ion-col>
         <ion-col class="ion-hide-sm-down">{{ user.createdAt | date: 'shortDate' }}</ion-col>
         <ion-col>
-          <ion-button>
+          <ion-button (click)="openUserModal(true,user)">
             <ion-icon slot="icon-only" name="pencil-sharp"></ion-icon>
           </ion-button>
-          <ion-button  (click)="openInfoModal(user)" >
+          <ion-button (click)="openInfoModal(user)">
             <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
           </ion-button>
         </ion-col>
@@ -68,7 +68,7 @@
     </ion-row>
     <ion-row class="ion-align-items-center ion-hide-md-up">
       <ion-col>
-        <ion-button fill="solid" expand="block" color="primary" (click)="openUserModal()">
+        <ion-button fill="solid" expand="block" color="primary" (click)="openUserModal(false)">
           <ion-icon slot="start" name="person-add-outline"></ion-icon>
           Agregar usuario
         </ion-button>

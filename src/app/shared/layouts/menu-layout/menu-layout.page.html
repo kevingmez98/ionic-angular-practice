@@ -6,13 +6,12 @@
   </ion-header>
   <ion-content class="ion-padding">
     <ion-item routerLink="/users">Usuarios</ion-item>
+    <ion-item routerLink="/providers">Proveedores</ion-item>
   </ion-content>
-
   <ion-item (click)="logout()">Cerrar sesión</ion-item>
 </ion-menu>
 
 <div class="ion-page" id="main-content">
-  <!-- carga de páginas -->    
-   <ion-router-outlet></ion-router-outlet>  <!-- Aquí se cargan las páginas de cada tab -->
+  <!-- carga de páginas -->
+  <ion-router-outlet></ion-router-outlet> <!-- Aquí se cargan las páginas de cada tab -->
 </div>
-

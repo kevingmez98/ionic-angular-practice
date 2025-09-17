@@ -7,6 +7,7 @@ import { ShowdataComponent } from './forms/user/showdata/showdata.component';
 import { HeaderComponent } from '../shared/components/header/header/header.component';
 import { Profile } from '../interfaces/Profile.model';
 import { UserService } from '../services/users.service';
+import { UserRoles } from '../constants/roles';
 
 @Component({
   selector: 'app-users',
@@ -101,5 +102,12 @@ export class UsersPage implements OnInit {
     await modal.present();
 
     const { data, role } = await modal.onDidDismiss();
+  }
+
+  // Traer nombre del rol
+  getRoleName(code: string): string {
+    // Busca entre los valores de UserRoles el que tenga ese código
+    const role = Object.values(UserRoles).find(r => r.code === code);
+    return role ? role.name : code; // Si no lo encuentra, muestra el code
   }
 }

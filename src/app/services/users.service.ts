@@ -47,9 +47,8 @@ export class UserService {
     }
 
     // Metodo de registro a profiles
-    async saveUserData(userId: string, userData: NewProfile): Promise<Profile[]> {
+    async saveUserData(userId: string|null, userData: NewProfile): Promise<Profile[]> {
         const userDB = this.mapToDbProfile(userData);
-        userDB.auth_user_id = "";
         const { data, error } = await this.supabaseService.getSupabase()
             .from('profiles')
             .insert([userDB]).select();
@@ -99,7 +98,7 @@ export class UserService {
             is_active: user.isActive,
             phone: user.phone,
             email: user.email,
-            auth_user_id: "",
+            //auth_user_id: "",
         };
     }
 

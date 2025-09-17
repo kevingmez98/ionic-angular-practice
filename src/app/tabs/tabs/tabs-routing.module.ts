@@ -20,6 +20,10 @@ const routes: Routes = [
         loadComponent: () => import('../../providers/providers.page').then(m => m.ProvidersPage)
       },
       {
+        path: 'provider/:id', // Parámetro dinámico (:id) para pasar el ID del proveedor
+        loadComponent: () => import('../../providers/pages/provider-detail/provider-detail.page').then(m => m.ProviderDetailPage)
+      },
+      {
         path: '',
         redirectTo: 'summary',
         pathMatch: 'full'

@@ -8,6 +8,7 @@ import { AdvisorService } from 'src/app/services/advisor.service';
 import { Department } from 'src/app/interfaces/Department.model';
 import { NewProfile, Profile } from 'src/app/interfaces/Profile.model';
 import { NewAdvisor } from 'src/app/interfaces/Advisor.model';
+import { UserRoles } from 'src/app/constants/roles';
 
 @Component({
   selector: 'app-user-form',
@@ -28,11 +29,15 @@ export class UserFormComponent implements OnInit {
   @Input() existingUser: Profile | null = null; // tipo Profile
   @Input() isEditMode: boolean = false;
 
+  public readonly UserRole = UserRoles; // exponer el enum de roles al template
+
 
   departments: Department[] = [];
   selectedRole: string = '';
   selectedDepartmentId: string = '';
   errorMessage: string = '';
+    // Convertir el objeto roles para usarlo en *ngFor
+  userRoleList = Object.values(UserRoles);
 
   password: string = '';
   private profileId: string = ''; // ID del perfil en caso de que sea actualización
@@ -53,6 +58,8 @@ export class UserFormComponent implements OnInit {
 
   // AL inicializar el componente
   async ngOnInit() {
+
+
     try {
       this.departments = await this.departmentService.getDepartments();
 
@@ -64,9 +71,9 @@ export class UserFormComponent implements OnInit {
         this.selectedRole = role;
 
         // Si rol es ADVISOR, guardar en advisors
-        if (role === 'ADVISOR') {
-          const {data, total }= await this.advisorService.getAdvisors(1,1,{"profile_id": id});
-          const {departmentId, specialty } = data[0];
+        if (role === UserRoles.ADVISOR.code) {
+          const { data, total } = await this.advisorService.getAdvisors(1, 1, { "profile_id": id });
+          const { departmentId, specialty } = data[0];
           this.advisor.departmentId = departmentId;
           this.selectedDepartmentId = departmentId;
           this.advisor.specialty = specialty;
@@ -111,14 +118,14 @@ export class UserFormComponent implements OnInit {
       }
 */
       // const userId = data.user?.id;
-      const userId = "";
+      const userId = null;
       // 2. Guardar datos en tabla profiles
       this.user.role = this.selectedRole;
       const profile = await this.userService.saveUserData(userId, this.user);
 
       // 3. Si rol es ADVISOR, guardar en advisors
-      if (this.selectedRole === 'ADVISOR') {
-
+      if (this.selectedRole === UserRoles.ADVISOR.code) {
+        console.log("si es advisor");
         this.advisor.departmentId = this.selectedDepartmentId;
         this.advisor.profileId = profile[0].id;
         const advisor = await this.advisorService.saveAdvisorData(this.advisor);
@@ -137,12 +144,12 @@ export class UserFormComponent implements OnInit {
   // Metodo de actualización
   async update() {
     if (this.isEditMode && this.existingUser) {
-      const updatedProfile = await this.userService.updateUserData(this.existingUser.id, this.user);
+      await this.userService.updateUserData(this.existingUser.id, this.user);
 
-      if (this.selectedRole === 'ADVISOR') {
+      if (this.selectedRole === UserRoles.ADVISOR.code) {
         this.advisor.departmentId = this.selectedDepartmentId;
         this.advisor.profileId = this.existingUser.id;
-        await this.advisorService.updateAdvisorData(this.profileId, this.advisor);
+        await this.advisorService.updateAdvisorData(null,this.profileId, this.advisor);
       }
     }
   }

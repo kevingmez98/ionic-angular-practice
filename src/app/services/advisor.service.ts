@@ -65,16 +65,24 @@ export class AdvisorService {
     }
 
 
-    // Metodo de actualización a advisors
-    async updateAdvisorData(advisorId: string, advisorData: any) {
-        const advisorDB = this.mapToDbAdvisor(advisorData);
-        const { data, error } = await this.supabaseService.getSupabase()
-            .from('advisors')
-            .update([advisorDB]).eq('id', advisorId);
-        if (error) {
-            throw error;
+    // Método para actualizar datos del advisor usando id o profile_id
+    async updateAdvisorData(advisorId: string | null, profileId: string | null, advisorData: any) {
+        if (!advisorId && !profileId) {
+            throw new Error('Debe proporcionar advisorId o profileId para actualizar');
         }
-        return (data ?? []).map(this.mapAdvisor);
+        const advisorDB = this.mapToDbAdvisor(advisorData);
+
+        // Construir consulta base
+        let query = this.supabaseService.getSupabase().from('advisors').update(advisorDB);
+
+        // Añadir filtro adecuado
+        if (advisorId) {
+            query = query.eq('id', advisorId);
+        } else if (profileId) {
+            query = query.eq('profile_id', profileId);
+        }
+
+        const { data, error } = await query;
     }
 
 

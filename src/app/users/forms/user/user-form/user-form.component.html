@@ -20,22 +20,20 @@
   </ion-item>
   <ion-item>
     <ion-label position="floating">Telefono</ion-label>
-    <ion-textarea [(ngModel)]="user.phone"></ion-textarea>
+    <ion-input [(ngModel)]="user.phone"></ion-input>
   </ion-item>
 
   <ion-item>
     <ion-label>Rol</ion-label>
     <ion-select placeholder="Selecciona un rol" [(ngModel)]="selectedRole">
-      <ion-select-option value="ADMIN">Administrador del sistema</ion-select-option>
-      <ion-select-option value="PRODUCT">Administrador de producto</ion-select-option>
-      <ion-select-option value="MANAGER">Gerente</ion-select-option>
-      <ion-select-option value="ADVISOR">Asesor</ion-select-option>
-      <ion-select-option value="ACCOUNTANT">Contador</ion-select-option>
+      <ion-select-option *ngFor="let role of userRoleList" [value]="role.code">
+        {{ role.name }}
+      </ion-select-option>
     </ion-select>
   </ion-item>
 
   <!-- Campos Departamento y especialidad visibles solo si el rol es ADVISOR -->
-  <ion-item *ngIf="selectedRole === 'ADVISOR'">
+  <ion-item *ngIf="selectedRole === UserRole.ADVISOR.code">
     <ion-label>Departamento</ion-label>
     <ion-select [(ngModel)]="selectedDepartmentId">
       <ion-select-option *ngFor="let dept of departments" [value]="dept.departmentId">
@@ -45,9 +43,9 @@
     </ion-select>
   </ion-item>
 
-  <ion-item *ngIf="selectedRole === 'ADVISOR'">
+  <ion-item *ngIf="selectedRole === UserRole.ADVISOR.code">
     <ion-label position="floating">Especialidad</ion-label>
-    <ion-input [(ngModel)]="advisor.specialty"></ion-input>
+    <ion-textarea [(ngModel)]="advisor.specialty" rows="5"></ion-textarea>
   </ion-item>
   <ion-item>
     <ion-label>Usuario activo</ion-label>

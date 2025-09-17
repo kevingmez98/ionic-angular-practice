@@ -1,4 +1,4 @@
-<app-header title="usuarios"></app-header>
+<app-header title="Proveedores"></app-header>
 <ion-content class="ion-padding ion-safe-area-top" fullscreen="false" padding>
   <div style="display: flex; justify-content: space-between; align-items: center;">
     <ion-card-title>Proveedores de la agencia</ion-card-title>
@@ -9,7 +9,7 @@
   <ion-grid>
     <ion-row class="ion-align-items-center ion-hide-sm-down">
       <ion-col sizeMd="2">
-        <ion-button fill="solid" color="primary">
+        <ion-button fill="solid" color="primary" (click)="openProviderModal(false)">
           <ion-icon slot="start" name="person-add-outline"></ion-icon>
           Agregar proveedor
         </ion-button>
@@ -40,11 +40,22 @@
 
       <!-- Tabla -->
       <ion-row *ngFor="let provider of providers" class="data-row">
-        <ion-col class="ion-hide-sm-down">{{ provider.logoUrl }}</ion-col>
+        <ion-col class="ion-hide-sm-down">
+          <ng-container *ngIf="provider.logoUrl; else noLogo">
+            <!-- Aquí puedes mostrar el logo, si tienes una imagen -->
+            <img [src]="provider.logoUrl" alt="Logo" class="h-8 w-8 rounded border object-cover" />
+          </ng-container>
+
+          <ng-template #noLogo>
+            <div class="h-8 w-8 bg-muted rounded border flex items-center justify-center">
+              <span class="text-xs text-muted-foreground">—</span>
+            </div>
+          </ng-template>
+        </ion-col>
         <ion-col>{{ provider.bussinesName }}</ion-col>
         <ion-col>{{ provider.providerType }}</ion-col>
         <ion-col class="ion-hide-sm-down"><strong>{{ provider.isActive ? 'Activo' : 'Inactivo' }}</strong></ion-col>
-        <ion-col class="ion-hide-sm-down"><strong>{{ provider.createdAt | date: 'shortDate' }}</strong></ion-col>
+        <ion-col class="ion-hide-sm-down">{{ provider.createdAt | date: 'shortDate' }}</ion-col>
         <ion-col>
           <ion-button (click)="openProviderModal(true,provider)">
             <ion-icon slot="icon-only" name="pencil-sharp"></ion-icon>
@@ -54,6 +65,27 @@
           </ion-button>
         </ion-col>
       </ion-row>
+      <ion-row>
+        <ion-col size="12" class="ion-text-center">
+          <ion-button (click)="prevPage()" [disabled]="page === 1">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+          </ion-button>
+          Página {{ page }} de {{totalPages}}
+          <ion-button (click)="nextPage()" [disabled]="isLastPage">
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-align-items-center ion-hide-md-up">
+        <ion-col>
+          <ion-button fill="solid" expand="block" color="primary" (click)="openProviderModal(false)">
+            <ion-icon slot="start" name="person-add-outline"></ion-icon>
+            Agregar proveedor
+          </ion-button>
+        </ion-col>
+
+      </ion-row>
+
     </ion-grid>
   </div>
 </ion-content>

@@ -40,7 +40,7 @@
       <ion-row *ngFor="let user of profiles" class="data-row">
         <ion-col>{{ user.fullName }}</ion-col>
         <ion-col class="ion-hide-sm-down">{{ user.email || 'Sin correo' }}</ion-col>
-        <ion-col>{{ user.role }}</ion-col>
+        <ion-col>{{ getRoleName(user.role) }}</ion-col>
         <ion-col class="ion-hide-sm-down">{{ user.isActive ? 'Activo' : 'Inactivo' }}</ion-col>
         <ion-col class="ion-hide-sm-down">{{ user.createdAt | date: 'shortDate' }}</ion-col>
         <ion-col>
@@ -73,7 +73,6 @@
           Agregar usuario
         </ion-button>
       </ion-col>
-
     </ion-row>
   </ion-grid>
 

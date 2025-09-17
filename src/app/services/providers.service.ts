@@ -85,7 +85,7 @@ export class ProviderService {
     async saveProviderData(providerData: NewProvider): Promise<Provider[]> {
         const providerDB = this.mapToDbProvider(providerData);
         const { data, error } = await this.supabaseService.getSupabase()
-            .from('provider')
+            .from('providers')
             .insert([providerDB]).select();
 
         if (error) {
@@ -98,7 +98,7 @@ export class ProviderService {
     async updateProviderData(providerId: string, providerData: NewProvider): Promise<Provider[]> {
         const providerDB = this.mapToDbProvider(providerData);
         const { data, error } = await this.supabaseService.getSupabase()
-            .from('provider')
+            .from('providers')
             .update([providerDB]).eq('id', providerId);
         if (error) {
             throw error;

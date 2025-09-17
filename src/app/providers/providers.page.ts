@@ -6,6 +6,7 @@ import { HeaderComponent } from '../shared/components/header/header/header.compo
 import { ProviderService } from '../services/providers.service';
 import { Provider } from '../interfaces/Provider.model';
 import { ShowProviderData } from './forms/provider/show-provider-data/showProviderData.component';
+import { ProviderFormComponent } from './forms/provider/provider-form/provider-form.component';
 
 @Component({
   selector: 'app-providers',
@@ -64,10 +65,10 @@ export class ProvidersPage implements OnInit {
 
   async openProviderModal(isEditMode: boolean, provider?: Provider) {
     const modal = await this.modalCtr.create({
-      component:ShowProviderData,
+      component:ProviderFormComponent,
       componentProps: {
         isEditMode: isEditMode,
-        existingUser: provider || null
+        existingProvider: provider || null
       }
     });
 

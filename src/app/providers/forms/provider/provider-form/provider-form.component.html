@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEditMode ? 'Editar proveedor' : 'Crear proveedor' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-item>
+    <ion-label position="floating">Nombre</ion-label>
+    <ion-input [(ngModel)]="provider.bussinesName"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Categoría</ion-label>
+    <ion-select [(ngModel)]="selectedCategory">
+      <ion-select-option *ngFor="let cat of providerCategories" [value]="cat.categoryId">
+        {{ cat.name }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-textarea label="Notas" aria-label="Notas" [(ngModel)]="provider.notes"
+      placeholder="Notas aquí..." rows="5"></ion-textarea>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Proveedor activo</ion-label>
+    <ion-toggle [(ngModel)]="provider.isActive"></ion-toggle>
+  </ion-item>
+
+
+  <ion-button expand="block" (click)="save()">Guardar</ion-button>
+  <ion-button *ngIf="isEditMode" expand="block" (click)="goToEditPage()">Editar información avanzada</ion-button>
+</ion-content>

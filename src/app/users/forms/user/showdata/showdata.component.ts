@@ -6,7 +6,7 @@ import { UserService } from 'src/app/services/users.service';
 import { DepartmentService } from 'src/app/services/departments.service';
 import { Department } from 'src/app/interfaces/Department.model';
 import { Advisor } from 'src/app/interfaces/Advisor.model';
-import { UserRole } from 'src/app/constants/roles';
+import { UserRoles } from 'src/app/constants/roles';
 import { Profile } from 'src/app/interfaces/Profile.model';
 import { AdvisorService } from 'src/app/services/advisor.service';
 
@@ -22,7 +22,7 @@ import { AdvisorService } from 'src/app/services/advisor.service';
 })
 export class ShowdataComponent implements OnInit {
   @Input() profile!: Profile;
-  public readonly UserRole = UserRole; // exponer el enum de roles al template
+  public readonly UserRole = UserRoles; // exponer el enum de roles al template
   advisor?: Advisor;
   department?: Department;
   constructor(private modalCtrl: ModalController,
@@ -31,7 +31,7 @@ export class ShowdataComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this.profile.role === UserRole.ADVISOR) {
+    if (this.profile.role === UserRoles.ADVISOR.code) {
       this.loadAdvisorData();
     }
 

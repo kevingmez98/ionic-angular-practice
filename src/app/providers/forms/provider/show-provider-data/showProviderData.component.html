@@ -26,9 +26,11 @@
   </ion-segment>
   <ion-segment-view>
     <ion-segment-content id="basic-content">
+
       <ion-item>
         <ion-label>Nombre</ion-label>
         <ion-label>{{provider.bussinesName}}</ion-label>
+
       </ion-item>
       <ion-item>
         <ion-label>Estado</ion-label>
@@ -48,45 +50,38 @@
       </ion-item>
     </ion-segment-content>
     <ion-segment-content id="provider-contact">
-      <ion-card>
+      <ion-card *ngFor="let contact of contacts">
+        <ion-item>
+          <ion-badge slot="start" color="tertiary">
+            <ion-icon name="person-circle-outline"></ion-icon>
+            {{contact.position}}
+          </ion-badge>
+          <ion-badge color="success" slot="start" *ngIf="contact.isPrimary">
+            <ion-icon name="star-outline"></ion-icon>
+            Principal
+          </ion-badge>
+        </ion-item>
         <ion-card-header>
-          <ion-card-title>Pepito - Contador</ion-card-title>
-          <ion-card-subtitle>Bogotá</ion-card-subtitle>
+          <ion-card-title>{{contact.contactName}}</ion-card-title>
+          <ion-card-subtitle>Ciudad del proveedor</ion-card-subtitle>
         </ion-card-header>
         <ion-card-content>
           <ion-item>
+            <ion-label>Email</ion-label>
+            <ion-label>{{contact.email || "No registrado"}}</ion-label>
+          </ion-item>
+          <ion-item>
             <ion-label>Telefono</ion-label>
-            <ion-label>4000303020</ion-label>
+            <ion-label>{{contact.phone || "No registrado"}}</ion-label>
           </ion-item>
           <ion-item>
-            <ion-label>Correo</ion-label>
-            <ion-label>test@gmail.com</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Dirección de contacto</ion-label>
-            <ion-label>No aplica</ion-label>
+            <ion-label>Celular</ion-label>
+            <ion-label>{{contact.mobilePhone|| "No registrado"}}</ion-label>
           </ion-item>
         </ion-card-content>
       </ion-card>
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>Sede principal - Operaciones</ion-card-title>
-          <ion-card-subtitle>Medellín</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-item>
-            <ion-label>Telefono</ion-label>
-            <ion-label>20303020</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Correo</ion-label>
-            <ion-label>operaciones@gmail.com</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Dirección de contacto</ion-label>
-            <ion-label>Cll 106 #20 -34 sur</ion-label>
-          </ion-item>
-        </ion-card-content>
+      <ion-card *ngIf="totalContacts == 0">
+        <div>No hay contactos disponibles</div>
       </ion-card>
 
     </ion-segment-content>
@@ -122,7 +117,7 @@
             <ion-label>Desayuno</ion-label>
             <ion-label>Cena</ion-label>
           </ion-item>
-          
+
           <ion-item>
             <ion-label>Media pensión</ion-label>
             <ion-label>Almuerzo</ion-label>
@@ -137,7 +132,7 @@
           </ion-item>
         </ion-card-content>
       </ion-card>
-      
+
     </ion-segment-content>
 
     <ion-segment-content id="transfer-content">

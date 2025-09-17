@@ -14,7 +14,7 @@
     <ion-segment-button value="basic" content-id="basic-content">
       <ion-label>Datos básicos</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="advisor" content-id="advisor-content" *ngIf="profile.role === UserRole.ADVISOR">
+    <ion-segment-button value="advisor" content-id="advisor-content" *ngIf="profile.role === UserRole.ADVISOR.code">
       <ion-label>Datos del asesor</ion-label>
     </ion-segment-button>
   </ion-segment>
@@ -33,7 +33,7 @@
         <ion-label>{{profile.phone}}</ion-label>
       </ion-item>
     </ion-segment-content>
-    <ion-segment-content id="advisor-content" *ngIf="profile.role === UserRole.ADVISOR">
+    <ion-segment-content id="advisor-content" *ngIf="profile.role === UserRole.ADVISOR.code">
       <ion-item>
         <ion-label>Departamento</ion-label>
         <ion-label>{{department?.name}}</ion-label>

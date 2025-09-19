@@ -1,8 +1,37 @@
 <app-header title="Editar proveedor"></app-header>
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">providerDetail</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" *ngIf="provider">
+  <ion-card> 
+    <ion-card-header>
+      <ion-card-title>{{provider.bussinesName}}</ion-card-title>
+      <ion-card-subtitle>
+        <ion-item>
+
+          <ion-badge slot="start" color="tertiary">
+            {{ provider.isActive ? 'Activo' : 'Inactivo' }}
+          </ion-badge>
+
+          <ion-badge slot="start" color="tertiary">
+            {{provider.providerType}}
+          </ion-badge>
+        </ion-item>
+      </ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+  <ion-segment value="default">
+    <ion-segment-button value="general">
+      <ion-label>Datos generales</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="contacts">
+      <ion-label>Contactos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="price">
+      <ion-label>Tarifas</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="documents">
+      <ion-label>Documentos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="bank">
+      <ion-label>Info. Bancaria</ion-label>
+    </ion-segment-button>
+  </ion-segment>
 </ion-content>

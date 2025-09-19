@@ -16,7 +16,7 @@ export class ProviderCategoryService {
     async getCategories(page: number = 0, pageSize: number = 10, filters?: { [key: string]: any }): Promise<ProviderCategory[]> {
         let query = this.supabaseService.getSupabase()
             .from('provider_categories')
-            .select('id, code, name, created_at');
+            .select('*');
 
         // Aplicar filtros si existen
         if (filters) {
@@ -28,8 +28,9 @@ export class ProviderCategoryService {
         const from = page * pageSize;
         const to = from + pageSize - 1;
         query = query.range(from, to);
-
+        console.log(filters);
         const { data, error } = await query;
+        console.log(data);
 
         if (error) {
             throw error;

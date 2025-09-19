@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { SupabaseService } from './supabase.service';
 import { NewProfile, Profile } from '../interfaces/Profile.model';
 import { Advisor, NewAdvisor } from '../interfaces/Advisor.model';
-
 @Injectable({
-    providedIn: 'root' // Singleton
+    providedIn: 'root', // Singleton
 })
 
 // Servicio de users
